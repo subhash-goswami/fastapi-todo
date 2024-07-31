@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  backend:
+    image: backend_todo:latest
+    container_name: backend_todo
+    build:
+      context: ./backend
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./test.db
+
+  frontend:
+    image: frontend_todo:latest
+    container_name: frontend_todo
+    build:
+      context: ./frontend
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
